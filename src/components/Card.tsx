@@ -10,8 +10,8 @@ export default function ProductCard({
 }: {
   venueName: string;
   imgSrc: string;
-  onCompare: (venueName: string, rating: number) => void;
-  rating: number;
+  onCompare?: (venueName: string, rating: number) => void;
+  rating?: number;
 }) {
   return (
     <InteractiveCard contentName={venueName}>
@@ -24,21 +24,23 @@ export default function ProductCard({
         />
       </div>
       <div className="w-full h-[15%] p-[10px]">{venueName}</div>
-      <div data-testid={`${venueName} Rating`}>
-        <Rating
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-          onChange={(e, newValue) => {
-            e?.stopPropagation();
-            onCompare(venueName, newValue || 0);
-          }}
-          className="mx-2"
-          value={rating}
-          precision={0.5}
-          name={`${venueName} Rating`}
-        />
-      </div>
+      {rating !== undefined && onCompare !== undefined && (
+        <div data-testid={`${venueName} Rating`}>
+          <Rating
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            onChange={(e, newValue) => {
+              e?.stopPropagation();
+              onCompare(venueName, newValue || 0);
+            }}
+            className="mx-2"
+            value={rating}
+            precision={0.5}
+            name={`${venueName} Rating`}
+          />
+        </div>
+      )}
     </InteractiveCard>
   );
 }
