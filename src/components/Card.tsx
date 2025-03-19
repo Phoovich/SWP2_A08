@@ -1,7 +1,6 @@
 import Image from "next/image";
 import InteractiveCard from "./InteractiveCard";
 import Rating from "@mui/material/Rating";
-
 export default function ProductCard({
   venueName,
   imgSrc,
@@ -11,7 +10,7 @@ export default function ProductCard({
   venueName: string;
   imgSrc: string;
   onCompare?: (venueName: string, rating: number) => void;
-  rating?: number;
+  rating: number;
 }) {
   return (
     <InteractiveCard contentName={venueName}>
@@ -24,8 +23,8 @@ export default function ProductCard({
         />
       </div>
       <div className="w-full h-[15%] p-[10px]">{venueName}</div>
-      {rating !== undefined && onCompare !== undefined && (
-        <div data-testid={`${venueName} Rating`}>
+      <div data-testid={`${venueName} Rating`}>
+        {onCompare ? (
           <Rating
             onClick={(e) => {
               e.stopPropagation();
@@ -39,8 +38,10 @@ export default function ProductCard({
             precision={0.5}
             name={`${venueName} Rating`}
           />
-        </div>
-      )}
+        ) : (
+          ""
+        )}
+      </div>
     </InteractiveCard>
   );
 }
